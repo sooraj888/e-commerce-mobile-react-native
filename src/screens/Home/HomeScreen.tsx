@@ -1,13 +1,23 @@
 // src/screens/HomeScreen.tsx
 import React from 'react';
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Dimensions,
+  Button,
+} from 'react-native';
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 import { tabBarHeight } from '../../utils/tabBarHeight';
-// import { tabBarHeight } from '../utils/tabBarHeight';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { addAmount, increment } from '../../redux/slices/counterSlice';
 
 const { width } = Dimensions.get('window');
 
@@ -21,6 +31,10 @@ const dummyData = Array.from({ length: 20 }, (_, i) => ({
 const HomeScreen = () => {
   const scrollY = useSharedValue(0);
   const lastScrollTime = useSharedValue(0);
+  const insets = useSafeAreaInsets();
+
+  const counter = useSelector((state: RootState) => state.counter.value);
+  const dispatch = useDispatch();
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: event => {
@@ -54,7 +68,15 @@ const HomeScreen = () => {
       onScroll={scrollHandler}
       scrollEventThrottle={16}
       contentContainerStyle={styles.container}
+      style={{ paddingTop: insets.top }}
     >
+      <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>
+        {counter}
+      </Text>
+      <Button title="Increment" onPress={() => dispatch(increment())} />
+
+      <Button title="Add" onPress={() => dispatch(addAmount(100))} />
+
       {dummyData.map(item => (
         <View key={item.id} style={styles.card}>
           <Image source={{ uri: item.image }} style={styles.image} />

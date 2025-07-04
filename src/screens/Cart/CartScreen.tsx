@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View, Text, DeviceEventEmitter, Button } from 'react-native';
-// import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function CartScreen() {
   const [tabVisible, setTabVisible] = useState(true);
