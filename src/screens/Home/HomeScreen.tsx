@@ -18,6 +18,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { addAmount, increment } from '../../redux/slices/counterSlice';
+import SearchBar from '../../components/SearchBar';
 
 const { width } = Dimensions.get('window');
 
@@ -70,6 +71,7 @@ const HomeScreen = () => {
       contentContainerStyle={styles.container}
       style={{ paddingTop: insets.top }}
     >
+      <SearchBar />
       <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>
         {counter}
       </Text>
